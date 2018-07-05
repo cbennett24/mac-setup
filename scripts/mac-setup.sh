@@ -1,5 +1,17 @@
 #!/bin/bash
 
+DEV_FOLDER=~/Developer
+DROPBOX_FOLDER=~/Dropbox
+PREFERENCES_FOLDER="${DROPBOX_FOLDER}"/preferences
+SUBLIME_PREFERENCES_SOURCE="${PREFERENCES_FOLDER}"/sublime/User
+SUBLIME_PREFERENCES_DEST=~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
+ALFRED_PREFERENCES_SOURCE="${PREFERENCES_FOLDER}"/alfred/Alfred.alfredpreferences
+PERSONAL_FOLDER="${DEV_FOLDER}"/personal
+WORK_FOLDER="${DEV_FOLDER}"/work
+GITHUB_USERNAME=cbennett24
+MAC_SETUP_REPO=mac-setup
+DOTFILES_REPO=dotfiles
+
 clear
 
 echo "*************************************************************************"
@@ -7,12 +19,16 @@ echo "**                              Mac Setup                              **"
 echo "*************************************************************************"
 echo -e "\n"
 
-read -p "Are you ready to set up your Mac in the most awesome way? (y/n)  " -n 1 -r
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  printf "\n\nYou're awesome. Let's get started...\n\n"
+read -p "Are you setting up your Mac for work or home? (w/h)  " -n 1 -r
+if [[ $REPLY =~ ^[Ww]$ ]]; then
+  printf "\n\nWork it is.\n\n"
+  SECONDARY_BREWFILE=work
+elif [[ $REPLY =~ ^[Hh]$ ]]; then
+  printf "\n\nHome it is.\n\n\n"
+  SECONDARY_BREWFILE=home
 else
-  printf "\n\nToo awesome for you?\n\nGo it alone then.\nBye.\n\n\n"
-  return
+  printf "\n\nWhich was it again, work or home?\n\n"
+  return 1
 fi
 
 if [ -d /Applications/Xcode.app -o -d ~/Applications/Xcode.app ]; then
@@ -28,11 +44,8 @@ if [ -d /Applications/Xcode.app -o -d ~/Applications/Xcode.app ]; then
 else
   printf "  ❗️  Xcode is not installed.\n\nPlease install Xcode and then re-run this script."
   open /Applications/App\ Store.app
-  return
+  return 1
 fi
-printf "  🔶  Attempting to agree to Xcode terms...\n"
-sudo xcrun cc
-printf "  ✅  Xcode terms agreed to.\n"
 
 if [ -f ~/.ssh/id_rsa.pub ]; then
   printf "  ✅  SSH Key exists.\n\n"
@@ -54,174 +67,83 @@ if [[ $REPLY =~ ^[Cc]$ ]]; then
   printf "\n\n  ✅  SSH key added to Github\n"
 fi
 
-cd ~
-
-if [ ! -d ~/code/personal ]; then
-  printf "  🔶  Creating ~/code/personal...\n"
-  mkdir -p ~/code/personal
-  printf "  ✅  Created ~/code/personal\n"
+if [ ! -d "${PERSONAL_FOLDER}" ]; then
+  printf "  🔶  Creating ${PERSONAL_FOLDER}...\n"
+  mkdir -p "${PERSONAL_FOLDER}"
+  printf "  ✅  Created ${PERSONAL_FOLDER}\n"
 else
-  printf "  ✅  ~/code/personal already exists\n"
+  printf "  ✅  ${PERSONAL_FOLDER} already exists\n"
 fi
 
-if [ ! -d ~/code/work ]; then
-  printf "  🔶  Creating ~/code/work...\n"
-  mkdir -p ~/code/work
-  printf "  ✅  Created ~/code/work\n"
+if [ ! -d "${WORK_FOLDER}" ]; then
+  printf "  🔶  Creating ${WORK_FOLDER}...\n"
+  mkdir -p "${WORK_FOLDER}"
+  printf "  ✅  Created ${WORK_FOLDER}\n"
 else
-  printf "  ✅  ~/code/work already exists\n"
+  printf "  ✅  ${WORK_FOLDER} already exists\n"
 fi
 
-if [ ! -d ~/code/third-party ]; then
-  printf "  🔶  Creating ~/code/third-party...\n"
-  mkdir -p ~/code/third-party
-  printf "  ✅  Created ~/code/third-party\n"
-else
-  printf "  ✅  ~/code/third-party already exists\n"
+printf "  🔶  Moving to ${PERSONAL_FOLDER}...\n"
+cd "${PERSONAL_FOLDER}"
+
+# mac-setup
+cd "${PERSONAL_FOLDER}"
+if [ ! -d "${PERSONAL_FOLDER}"/"${MAC_SETUP_REPO}" ] ; then
+  printf "  🔶  Attempting to clone mac-setup repo...\n"
+  git clone git@github.com:"${GITHUB_USERNAME}"/"${MAC_SETUP_REPO}".git
+  printf "  ✅  mac-setup repo cloned.\n"
+else∏∏
+  printf "  ✅  mac-setup repo already exists.\n"
 fi
 
-printf "  🔶  Moving to ~/code/personal...\n"
-cd ~/code/personal
-
-# keys repo: This private repository contains various API keys.
-if [ ! -d ~/code/personal/keys ]; then
-  printf "  🔶  Attempting to clone keys repo...\n"
-  git clone git@github.com:ursooperduper/keys.git
-  printf "  ✅  Cloned keys repo\n"
-fi
-printf "  🔶  Attempting to export keys...\n"
-. keys/.keys
-printf "  ✅  Keys exported\n"
-
-printf "  🔶  Attempting to symlink .gitconfig...\n"
-ln -s ~/code/personal/keys/.gitconfig ~/.gitconfig
-printf "  ✅  .gitconfig symlinked\n"
-
-
-# dotfiles: This repository contains personal configuration files for various tools.
-if [ ! -d ~/code/personal/dotfiles ]; then
+# dotfiles
+if [ ! -d "${PERSONAL_FOLDER}"/"${DOTFILES_REPO}" ]; then
   printf "  🔶  Attempting to clone dotfiles repo...\n"
-  git clone git@github.com:ursooperduper/dotfiles.git
-  printf "  ✅  Cloned dotfiles repo\n"
+  git clone git@github.com:"${GITHUB_USERNAME}"/"${DOTFILES_REPO}".git
+  printf "  ✅  dotfiles repo cloned.\n"
+else
+	printf "  ✅  dotfiles repo already exists.\n"
 fi
-
-# Create symlinks for important files.
-printf "  🔶  Attempting to symlink .bash-bindings...\n"
-ln -s ~/code/personal/dotfiles/.bash-bindings ~/.bash-bindings
-printf "  ✅  .bash-bindings symlinked\n"
-
-printf "  🔶  Attempting to symlink .bash-profile...\n"
-ln -s ~/code/personal/dotfiles/.bash_profile ~/.bash_profile
-printf "  ✅  .bash-profile symlinked\n"
-
-printf "  🔶  Attempting to symlink .bashrc...\n"
-ln -s ~/code/personal/dotfiles/.bashrc ~/.bashrc
-printf "  ✅  .bashrc symlinked\n"
-
-printf "  🔶  Attempting to symlink .gemrc...\n"
-ln -s ~/code/personal/dotfiles/.gemrc ~/.gemrc
-printf "  ✅  .bashrc symlinked\n"
-
-printf "  🔶  Attempting to symlink .git_completion.sh...\n"
-ln -s ~/code/personal/dotfiles/.git_completion.sh ~/.git_completion.sh
-printf "  ✅  .git-completion symlinked\n"
-
-printf "  🔶  Attempting to symlink .gitignore...\n"
-ln -s ~/code/personal/dotfiles/.gitignore ~/.gitignore
-printf "  ✅  .gitignore symlinked\n"
-
-printf "  🔶  Attempting to symlink .tmux.conf...\n"
-ln -s ~/code/personal/dotfiles/.tmux.conf ~/.tmux.conf
-printf "  ✅  .tmux.conf symlinked\n"
-
-printf "  🔶  Attempting to symlink .vimrc...\n"
-ln -s ~/code/personal/dotfiles/.vimrc ~/.vimrc
-printf "  ✅  .vimrc symlinked\n"
 
 # Install Homebrew (package manager).
-if [ hash brew 2 >/dev/null ]; then
+if ! which -s brew; then
   printf "  🔶  Installing Homebrew...\n"
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
   printf "  ✅  Homebrew installed\n\n"
 fi
 
-# Install version support in Homebrew.
-printf "  🔶  Installing Homebrew cask versions...\n"
-brew tap caskroom/versions
-printf "  ✅  Brew Cask Versions installed\n"
+# Validate Homebrew dependencies.
+if brew config && brew doctor; then
+	# Install core Homebrew binaries, casks, and App Store apps.
+	printf "  🔶  Installing core Homebrew binaries, casks, and App Store apps...\n"
+	brew bundle --file="${MAC_SETUP_REPO}"/brewfiles/Brewfile.core
+	printf "  ✅  Brew core apps installed\n"
 
-# Install Homebrew binaries.
-cd ~/mac-setup-master
-printf "  🔶  Installing Homebrew binaries...\n"
-. scripts/brew-binaries.sh
-printf "  ✅  Brew binaries installed\n"
+	# Install home or work Homebrew binaries, casks, and App Store apps.
+	printf "  🔶  Installing ${SECONDARY_BREWFILE} Homebrew binaries, casks, and App Store apps...\n"
+	brew bundle --file="${MAC_SETUP_REPO}"/brewfiles/Brewfile."${SECONDARY_BREWFILE}"
+	printf "  ✅  Brew ${SECONDARY_BREWFILE} apps installed\n"
 
-# Install Homebrew cask (support for managing apps via Homebrew)
-printf "  🔶  Installing Homebrew cask\n"
-brew tap caskroom/cask
-printf "  ✅  Brew cask installed\n"
+	# Switch to using brew-installed bash as default shell
+	if ! fgrep -q '/usr/local/bin/bash' /etc/shells; then
+	  echo '/usr/local/bin/bash' | sudo tee -a /etc/shells;
+	  chsh -s /usr/local/bin/bash;
+	fi;
 
-# Install Homebrew cask binaries.
-. scripts/brew-cask-apps.sh
-printf "  ✅  Brew Cask binaries installed\n"
+	# Remove older versions of formulae from the cellar
+	brew cleanup
 
-# Install Homebrew font support.
-brew tap caskroom/fonts
-printf "  ✅  Brew Cask Fonts installed\n"
+	printf "\n\nYour Mac set-up is now complete.\n"
+else
+	printf "\n ❌  Something is wrong with homebrew.\n\n"
+	return 1
+fi
 
-# Install Homebrew cask fonts.
-. scripts/brew-fonts.sh
-printf "  ✅  Brew cask fonts installed\n"
+if [ -d "${SUBLIME_PREFERENCES_DEST}" ]; then
+   ln -s "${SUBLIME_PREFERENCES_SOURCE}" "${SUBLIME_PREFERENCES_DEST}"
+else
+   echo "Sublime preferences have not synced yet. Manually link them in once they have."
+fi
 
-# Install gems
-. gems.sh
-printf "  ✅  Gems installed\n"
-
-# Install RVM
-printf " Attempting to install RVM"
-\curl -sSL https://get.rvm.io | bash -s stable
-prinf "  ✅  Installed RVM"
-
-# Install App Store Apps
-printf " Attempting to install App Store apps"
-read -p "Please enter your App Store email address... : "
-mas signin --dialog $REPLY
-printf " Signed in and installing App Store apps"
-. scripts/mas-apps.sh
-printf "  ✅  Mac App Store apps installed\n"
-
-# Clone projects from git
-cd ~/code/personal
-
-# Blog
-git clone git@github.com:ursooperduper/ursooperduper.github.io.git
-printf "  ✅  Blog repo cloned\n"
-cd ~/code/personal/ursooperduper.github.io
-npm install
-bundle install
-
-# Cheatsheets
-cd ~/code/personal
-git clone git@github.com:ursooperduper/cheatsheets.git
-printf "  ✅  Cheatsheets repo cloned\n"
-cd ~/code/personal/cheatsheets
-npm install
-bundle install
-
-# Prototypes
-cd ~/code/personal
-git clone git@github.com:ursooperduper/prototypes.git
-printf "  ✅  Prototypes repo cloned\n"
-cd ~/code/personal/prototypes
-npm install
-bundle install
-
-# Mac-Setup
-cd ~/code/personal
-git clone git@github.com:ursooperduper/mac-setup.git
-printf "  ✅  Mac Setup repo cloned\n"
-
-cd ~/mac-setup-master
-printf "\n\nYour Mac set-up is now complete. Thanks for playing. You can delete this directory now"
-return
+return 0

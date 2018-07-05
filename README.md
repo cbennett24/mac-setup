@@ -1,21 +1,12 @@
 # My Mac Setup
 
-This repo contains a set of instructions and scripts that I use to set up my environment for work and play.
+This repo contains a set of instructions and scripts that I use to set up my environment for work and play. It's a fork of https://github.com/ursooperduper/mac-setup.
 
 ## Step 1: Install XCode via the App Store
 
 Homebrew relies on build tools that are a part of XCode, so before you do anything else, download that.
 
 * [Xcode](https://developer.apple.com/xcode/)
-
-*Note: If you want to figure out which apps you've installed via the App Store, you can enter the following command:*
-
-```
-find /Applications \
--path '*Contents/_MASReceipt/receipt' \
--maxdepth 4 -print |\
-sed 's#.app/Contents/_MASReceipt/receipt#.app#g; s#/Applications/##'
-```
 
 ## Step 2: Download this repo
 
@@ -30,15 +21,7 @@ curl -O https://github.com/ursooperduper/mac-setup/archive/master.zip
 
 Then enter ```unzip``` to extract the zip file to your home directory with the folder name, ```mac-setup-master```.
 
-
-## Step 3: Java Stuff
-
-Unfortunately, some tools require Java. So you need to download and install the following:
-
-* [Java for OS X](http://java.com/en/download/mac_download.jsp)
-* [Java SE Runtime Environment](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
-
-## Step 4: Customize MacOS
+## Step 3: Customize MacOS
 
 The ```.macos``` script customizes the OS so it runs the way I like it.  It's based on the awesome work found here: https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 
@@ -64,15 +47,12 @@ The mac-setup script does the following:
 * Checks for (and installs Command Line Tools)
 * Agrees to the Xcode ToS
 * Creates an SSH key (& copies it to the clipboard) and prompts you to add it to Github
-* Creates working directories (~/code/personal, ~/code/work, & ~/code/third-party)
-* Clones Github repos (ursooperduper.github.io, keys, .atom, dotfiles, cheatsheets, prototypes, mac-setup)
-* Runs ```npm install``` and ```bundle install``` for projects
-* Exports .keys so they're available as environment variables
-* Symlinks relevant .keys and .dotfiles files (ex: .gitconfig, .bashrc)
+* Creates working directories (~/Developer/personal, ~/Developer/work, & ~/Developer/third-party)
+* Symlinks relevant .dotfiles files (ex: .gitconfig, .bashrc)
 * Runs OS X Customization script (based on ...)
 * Installs Homebrew and Cask (versions, apps, fonts)
 * Installs mas which then lets you install your App Store apps
-* Installs Homebrew binaries, Cask binaries, Cask fonts, and Ruby Gems
+* Installs Homebrew binaries, Cask binaries, and App Store apps
 
 *Note:It may be necessary to run the script more than once for machine restarts and installations. I'll improve the script over time to address that flow.*
 
