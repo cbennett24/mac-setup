@@ -1,0 +1,54 @@
+tap "homebrew/science"
+tap "homebrew/cask-versions"
+tap "homebrew/core"
+tap "homebrew/versions"
+tap "homebrew/python"
+tap "homebrew/cask"
+tap "homebrew/bundle"
+tap "homebrew/services"
+tap "homebrew/cask-drivers"
+brew "arp-scan"
+brew "brew-cask-completion"
+brew "git"
+brew "jq"
+brew "mas"
+brew "python"
+brew "wget"
+brew "coreutils"
+brew "moreutils"
+brew "findutils"
+brew "tree"
+brew "gnu-sed", args: ["with-default-names"]
+cask "1password"
+cask "alfred"
+cask "appcleaner"
+cask "dash"
+cask "dropbox"
+cask "firefox"
+cask "flux"
+cask "istat-menus"
+cask "iterm2"
+cask "karabiner-elements"
+cask "omnidisksweeper"
+cask "omnifocus"
+cask "pdfexpert"
+cask "racket"
+cask "rocket"
+cask "soda-player"
+cask "sublime-text"
+cask "the-unarchiver"
+cask "vanilla"
+cask "vlc"
+cask "zoomus"
+cask "homebrew/cask-drivers/logitech-options"
+mas "Airmail 3", id: 918858936
+mas "Bear", id: 1091189122
+mas "Day One", id: 1055511498
+mas "Deliveries", id: 924726344
+mas "Fantastical 2", id: 975937182
+mas "Keynote", id: 409183694
+mas "Magnet", id: 441258766
+mas "ReadKit", id: 588726889
+mas "Tweetbot", id: 557168941
+mas "Xcode", id: 497799835
+mas "Yoink", id: 457622435
