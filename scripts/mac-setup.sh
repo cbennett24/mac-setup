@@ -12,6 +12,8 @@ GITHUB_USERNAME=cbennett24
 MAC_SETUP_REPO=mac-setup
 DOTFILES_REPO=dotfiles
 
+set -e
+
 clear
 
 echo "*************************************************************************"
