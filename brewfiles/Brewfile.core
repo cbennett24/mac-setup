@@ -1,54 +1,72 @@
-tap "homebrew/science"
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-drivers"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
-tap "homebrew/versions"
-tap "homebrew/python"
-tap "homebrew/cask"
-tap "homebrew/bundle"
 tap "homebrew/services"
-tap "homebrew/cask-drivers"
+tap "mas-cli/tap"
 brew "arp-scan"
+brew "bash"
+brew "bash-completion@2"
 brew "brew-cask-completion"
+brew "clang-format"
+brew "coreutils"
+brew "findutils"
+brew "get-flash-videos"
 brew "git"
+brew "gnu-sed", args: ["with-default-names"]
 brew "jq"
 brew "mas"
-brew "python"
-brew "wget"
-brew "coreutils"
 brew "moreutils"
-brew "findutils"
+brew "pcre"
 brew "tree"
-brew "gnu-sed", args: ["with-default-names"]
+brew "wget"
 cask "1password"
 cask "alfred"
+cask "amadine"
 cask "appcleaner"
+cask "arduino"
+cask "backblaze"
+cask "balenaetcher"
+cask "calibre"
+cask "chatology"
+cask "coolterm"
 cask "dash"
 cask "dropbox"
+cask "fantastical"
 cask "firefox"
 cask "flux"
 cask "istat-menus"
 cask "iterm2"
 cask "karabiner-elements"
+cask "logitech-options"
 cask "omnidisksweeper"
 cask "omnifocus"
 cask "pdfexpert"
 cask "racket"
 cask "rocket"
-cask "soda-player"
+cask "saleae-logic"
+cask "simple-comic"
+cask "slack"
+cask "sublime-merge"
 cask "sublime-text"
+cask "tg-pro"
 cask "the-unarchiver"
+cask "usb-overdrive"
 cask "vanilla"
 cask "vlc"
+cask "wireshark"
+cask "zoom"
 cask "zoomus"
-cask "homebrew/cask-drivers/logitech-options"
-mas "Airmail 3", id: 918858936
 mas "Bear", id: 1091189122
 mas "Day One", id: 1055511498
-mas "Deliveries", id: 924726344
-mas "Fantastical 2", id: 975937182
+mas "Deliveries", id: 290986013
+mas "Fantastical", id: 975937182
 mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
 mas "ReadKit", id: 588726889
-mas "Tweetbot", id: 557168941
+mas "Spark", id: 1176895641
+mas "Tailscale", id: 1475387142
+mas "Tweetbot", id: 1384080005
 mas "Xcode", id: 497799835
 mas "Yoink", id: 457622435

@@ -21,18 +21,6 @@ echo "**                              Mac Setup                              **"
 echo "*************************************************************************"
 echo -e "\n"
 
-read -p "Are you setting up your Mac for work or home? (w/h)  " -n 1 -r
-if [[ $REPLY =~ ^[Ww]$ ]]; then
-  printf "\n\nWork it is.\n\n"
-  SECONDARY_BREWFILE=work
-elif [[ $REPLY =~ ^[Hh]$ ]]; then
-  printf "\n\nHome it is.\n\n\n"
-  SECONDARY_BREWFILE=home
-else
-  printf "\n\nWhich was it again, work or home?\n\n"
-  return 1
-fi
-
 if [ -d /Applications/Xcode.app -o -d ~/Applications/Xcode.app ]; then
   printf "  ✅  Xcode installed.\n"
   if xcode-select --print-path > /dev/null; then
@@ -121,11 +109,6 @@ if brew config && brew doctor; then
 	printf "  🔶  Installing core Homebrew binaries, casks, and App Store apps...\n"
 	brew bundle --file="${MAC_SETUP_REPO}"/brewfiles/Brewfile.core
 	printf "  ✅  Brew core apps installed\n"
-
-	# Install home or work Homebrew binaries, casks, and App Store apps.
-	printf "  🔶  Installing ${SECONDARY_BREWFILE} Homebrew binaries, casks, and App Store apps...\n"
-	brew bundle --file="${MAC_SETUP_REPO}"/brewfiles/Brewfile."${SECONDARY_BREWFILE}"
-	printf "  ✅  Brew ${SECONDARY_BREWFILE} apps installed\n"
 
 	# Switch to using brew-installed bash as default shell
 	if ! fgrep -q '/usr/local/bin/bash' /etc/shells; then

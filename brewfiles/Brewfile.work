@@ -1,5 +1,0 @@
-brew "imagemagick"
-cask "google-drive-file-stream"
-cask "mactex"
-cask "skim"
-cask "slack"
