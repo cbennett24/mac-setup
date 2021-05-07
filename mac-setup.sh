@@ -1,13 +1,12 @@
 #!/bin/bash
 
-DEV_FOLDER=~/Developer
-DROPBOX_FOLDER=~/Dropbox
+DEV_FOLDER=~/developer
+DROPBOX_FOLDER=~/dropbox
 PREFERENCES_FOLDER="${DROPBOX_FOLDER}"/preferences
-SUBLIME_PREFERENCES_SOURCE="${PREFERENCES_FOLDER}"/sublime/User
+SUBLIME_PREFERENCES_SOURCE="${PREFERENCES_FOLDER}"/sublime/user
 SUBLIME_PREFERENCES_DEST=~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
 ALFRED_PREFERENCES_SOURCE="${PREFERENCES_FOLDER}"/alfred/Alfred.alfredpreferences
 PERSONAL_FOLDER="${DEV_FOLDER}"/personal
-WORK_FOLDER="${DEV_FOLDER}"/work
 GITHUB_USERNAME=cbennett24
 MAC_SETUP_REPO=mac-setup
 DOTFILES_REPO=dotfiles
@@ -57,28 +56,11 @@ if [[ $REPLY =~ ^[Cc]$ ]]; then
   printf "\n\n  ✅  SSH key added to Github\n"
 fi
 
-if [ ! -d "${PERSONAL_FOLDER}" ]; then
-  printf "  🔶  Creating ${PERSONAL_FOLDER}...\n"
-  mkdir -p "${PERSONAL_FOLDER}"
-  printf "  ✅  Created ${PERSONAL_FOLDER}\n"
-else
-  printf "  ✅  ${PERSONAL_FOLDER} already exists\n"
-fi
-
-if [ ! -d "${WORK_FOLDER}" ]; then
-  printf "  🔶  Creating ${WORK_FOLDER}...\n"
-  mkdir -p "${WORK_FOLDER}"
-  printf "  ✅  Created ${WORK_FOLDER}\n"
-else
-  printf "  ✅  ${WORK_FOLDER} already exists\n"
-fi
-
-printf "  🔶  Moving to ${PERSONAL_FOLDER}...\n"
-cd "${PERSONAL_FOLDER}"
+printf "  🔶  Moving to ${DEV_FOLDER}...\n"
+cd "${DEV_FOLDER}"
 
 # mac-setup
-cd "${PERSONAL_FOLDER}"
-if [ ! -d "${PERSONAL_FOLDER}"/"${MAC_SETUP_REPO}" ] ; then
+if [ ! -d "${DEV_FOLDER}"/"${MAC_SETUP_REPO}" ] ; then
   printf "  🔶  Attempting to clone mac-setup repo...\n"
   git clone git@github.com:"${GITHUB_USERNAME}"/"${MAC_SETUP_REPO}".git
   printf "  ✅  mac-setup repo cloned.\n"
@@ -87,12 +69,12 @@ else∏∏
 fi
 
 # dotfiles
-if [ ! -d "${PERSONAL_FOLDER}"/"${DOTFILES_REPO}" ]; then
+if [ ! -d "${DEV_FOLDER}"/"${DOTFILES_REPO}" ]; then
   printf "  🔶  Attempting to clone dotfiles repo...\n"
   git clone git@github.com:"${GITHUB_USERNAME}"/"${DOTFILES_REPO}".git
   printf "  ✅  dotfiles repo cloned.\n"
 else
-	printf "  ✅  dotfiles repo already exists.\n"
+  printf "  ✅  dotfiles repo already exists.\n"
 fi
 
 # Install Homebrew (package manager).
