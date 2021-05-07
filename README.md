@@ -13,18 +13,17 @@ Homebrew relies on build tools that are a part of XCode, so before you do anythi
 At this stage, Github access hasn't been set up on the system, so  grab this repo using `curl`.
 
 ```
-mkdir -p ~/developer
-cd ~/developer
-curl -O https://github.com/cbennett24/mac-setup/archive/master.zip
+cd ~/
+curl -LO https://github.com/cbennett24/mac-setup/archive/main.zip
+unzip main.zip
 ```
 
 ## Step 3: Run mac-setup.sh
 
-Navigate to the `mac-setup` directory and run the mac-setup script.
+Run the mac-setup script.
 
 ```
-cd ~/developer/mac-setup
-./mac-setup.sh
+. ~/mac-setup-main/mac-setup.sh
 ```
 
 The mac-setup script does the following:
