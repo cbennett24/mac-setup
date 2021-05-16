@@ -21,7 +21,7 @@ echo "**                              Mac Setup                              **"
 echo "*************************************************************************"
 echo -e "\n"
 
-if [ -d /Applications/Xcode.app -o -d ~/Applications/Xcode.app ]; then
+if command -v xcode-select &> /dev/null ; then
 	printf "  ✅  Xcode installed.\n"
 	if xcode-select --print-path > /dev/null; then
 		printf "  ✅  Command Line Tools installed.\n"
@@ -32,8 +32,7 @@ if [ -d /Applications/Xcode.app -o -d ~/Applications/Xcode.app ]; then
 		printf "  ✅  Command Line Tools installed.\n"
 	fi
 else
-	printf "  ❗️  Xcode is not installed.\n\nPlease install Xcode and then re-run this script."
-	open /Applications/App\ Store.app
+	printf "  ❗️  Xcode is not installed.\n\nPlease install Xcode and then re-run this script.\n"
 	return 1
 fi
 
@@ -65,7 +64,7 @@ if [ ! -d "${DEV_FOLDER}"/"${MAC_SETUP_REPO}" ] ; then
 	printf "  🔶  Attempting to clone mac-setup repo...\n"
 	git clone git@github.com:"${GITHUB_USERNAME}"/"${MAC_SETUP_REPO}".git
 	printf "  ✅  mac-setup repo cloned.\n"
-else∏∏
+else
 	printf "  ✅  mac-setup repo already exists.\n"
 fi
 
@@ -81,7 +80,7 @@ fi
 # Install Homebrew (package manager).
 if ! which -s brew; then
 	printf "  🔶  Installing Homebrew...\n"
-	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
 	printf "  ✅  Homebrew installed\n\n"
 fi
