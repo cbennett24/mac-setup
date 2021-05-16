@@ -14,7 +14,7 @@ brew "coreutils"
 brew "findutils"
 brew "get-flash-videos"
 brew "git"
-brew "gnu-sed", args: ["with-default-names"]
+brew "gnu-sed"
 brew "jq"
 brew "mas"
 brew "moreutils"
@@ -29,7 +29,6 @@ cask "arduino"
 cask "backblaze"
 cask "balenaetcher"
 cask "calibre"
-cask "chatology"
 cask "coolterm"
 cask "dash"
 cask "dropbox"
@@ -42,7 +41,7 @@ cask "karabiner-elements"
 cask "logitech-options"
 cask "omnidisksweeper"
 cask "omnifocus"
-cask "pdfexpert"
+cask "pdf-expert"
 cask "racket"
 cask "rocket"
 cask "saleae-logic"
@@ -52,17 +51,15 @@ cask "sublime-merge"
 cask "sublime-text"
 cask "tg-pro"
 cask "the-unarchiver"
-cask "usb-overdrive"
 cask "vanilla"
 cask "vlc"
 cask "wireshark"
 cask "zoom"
-cask "zoomus"
 mas "Bear", id: 1091189122
+mas "Brother P-touch Editor", id: 1453365242
 mas "Day One", id: 1055511498
 mas "Deliveries", id: 290986013
 mas "Fantastical", id: 975937182
-mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
 mas "ReadKit", id: 588726889
 mas "Spark", id: 1176895641
